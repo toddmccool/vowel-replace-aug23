@@ -1,0 +1,139 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta http-equiv="X-UA-Compatible" content="IE=edge" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Text Replacer for vocals</title>
+    <style>
+      .highlighted {
+        background-color: yellow;
+      }
+    </style>
+  </head>
+  <body>
+    <label for="inputText"><h2>Enter your lyric section:</h2></label>
+    <textarea id="inputText" rows="20" cols="40"></textarea><br />
+    <button onclick="markWords()">reGenerate!</button>
+    <h3>click on your problem words for modifications:</h3>
+    <pre id="outputText"></pre>
+
+    <script>
+      const replacements = {
+        show: "shu",
+        "don't": "dunt",
+        dont: "dunt",
+        "won't": "wunt",
+
+        wont: "wunt",
+        "doesn't": "dah-znd",
+        broken: "brugahn",
+        look: "lug",
+        could: "kud",
+        only: "unluh",
+        i: "huh",
+        find: "vuhnd",
+        like: "lug",
+
+        eye: "huh",
+        eyes: "huhz",
+        tonight: "toe-nuhd",
+        why: "whuh",
+        my: "muh",
+        myself: "muh-siv",
+
+        her: "hihr",
+        girl: "(n)gihrl",
+        first: "vihzd",
+        work: "(h)wihk",
+        word: "(h)wihd",
+        world: "(h)wihld",
+
+        learn: "lihn",
+
+        love: "(h)lahv",
+        what: "(h)wah-d",
+        one: "(h)wah-n",
+        come: "gahm",
+        over: "uh-vih",
+
+        around: "ah-rehnd",
+        was: "(h)wahz",
+        call: "(n)gal",
+        got: "(n)gad",
+        talk: "(n)dog",
+        dark: "(n)dak",
+        california: "gehLiVornyah",
+
+        and: "ehnd",
+
+        end: "(h)aynd",
+        matter: "(h)meh-dahr",
+
+        power: "(m)behwih",
+        that: "thed",
+        had: "hed",
+        have: "hehV",
+        on: "han",
+        said: "zid",
+        best: "mBist",
+        "jessie's": "jizz-ooz",
+        jessies: "jizz-ooz",
+        wet: "(h)wit",
+        in: "(h)ayn",
+        him: "(h)aym",
+        wish: "(h)waysh",
+        with: "(h)wayth",
+        six: "zayx",
+        day: "(n)dee",
+        way: "(h)wee",
+        where: "(h)wee",
+        say: "zee",
+
+        stay: "zdee",
+        change: "chgee",
+
+        she: "shoo",
+        easy: "(h)ooZoo",
+        feel: "vool",
+        feelin: "voolane",
+        feeling: "voolane",
+        breathe: "mBrooth",
+        feet: "vood",
+        beach: "(m)booch(g)",
+        people: "(m)boo-bah",
+        real: "(h)roo",
+        reach: "(h)rooch",
+        too: "doe",
+        you: "(h)yoh",
+        who: "hoe",
+        cool: "(n)gol",
+        warm: "(h)wuhM",
+      };
+
+      function transformWord(event) {
+        const originalWord = event.target.textContent.toLowerCase();
+        const replacementWord = replacements[originalWord];
+
+        if (replacementWord) {
+          event.target.innerHTML = replacementWord;
+          event.target.classList.add("highlighted");
+          event.target.removeEventListener("click", transformWord);
+        }
+      }
+
+      function markWords() {
+        let inputText = document.getElementById("inputText").value;
+
+        for (let word in replacements) {
+          const regex = new RegExp(`\\b${word}\\b`, "gi");
+          inputText = inputText.replace(regex, function (matched) {
+            return `<span onclick="transformWord(event)">${matched}</span>`;
+          });
+        }
+
+        document.getElementById("outputText").innerHTML = inputText;
+      }
+    </script>
+  </body>
+</html>
